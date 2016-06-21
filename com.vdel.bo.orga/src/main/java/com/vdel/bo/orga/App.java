@@ -38,7 +38,7 @@ public class App
         final File file = new File("toto.sav");
         if (file.exists()) {
             try {
-                System.out.println("Fichier existe");
+                System.out.println("Fichier existe toto");
                 input = new ObjectInputStream(new FileInputStream(file));
                 transactionId = (String) input.readObject();
                 System.out.println("Content : \n" + transactionId + "\n-----------");
