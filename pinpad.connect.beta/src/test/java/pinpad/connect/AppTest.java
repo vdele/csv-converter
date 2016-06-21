@@ -3,10 +3,6 @@ package pinpad.connect;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import com.pconnect.entity.event.Person;
 import com.pconnect.entity.event.itf.IPerson;
 import com.pconnect.factory.parsing.NameData;
@@ -15,12 +11,28 @@ import com.pconnect.factory.util.FactoryUtils;
 import com.pconnect.factory.util.Invoker;
 import com.pconnect.factory.util.ParsingFactory;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 /**
  * Unit test for simple App.
  */
 public class AppTest 
 extends TestCase
 {
+
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite()
+    {
+        return new TestSuite( AppTest.class );
+    }
+
+    private final String methodName = "length";
+
+    private final String valueObject = "Some object";
 
     /**
      * Create the test case
@@ -33,11 +45,25 @@ extends TestCase
     }
 
     /**
-     * @return the suite of tests being tested
+     * @param tab
      */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    private void afficheResult(final int[] tab) {
+        System.out.println("-----------------");
+        for(int i=0 ; i < tab.length;i++){
+            if(tab[i]!=0) {
+                System.out.println( i + " : " + tab[i]);
+            }
+        }
+        System.out.println("-----------------");
+    }
+
+    /**
+     * @param tab
+     */
+    private void init(final int[] tab) {
+        for(int i=0 ; i < tab.length;i++){
+            tab[i] = 0;
+        }
     }
 
     /**
@@ -48,9 +74,28 @@ extends TestCase
         assertTrue( true );
     }
 
+    public void testDice(){
+        final int[] tab={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        for(int i = 0 ; i < 300000;i++){
+            final int de1 = FactoryUtils.dice(6, 2);
+            tab[de1]++;
+        }
+        afficheResult(tab);
+    }
+
+    public void testGetMethod() throws SecurityException, NoSuchMethodException, IllegalArgumentException,
+    IllegalAccessException, InvocationTargetException, ClassNotFoundException, InstantiationException {
+        final Class<?> c = Class.forName("java.lang.String");
+        final Method m = c.getMethod(methodName, new Class[] {});
+        final Object ret = m.invoke(valueObject, new Object[] {});
+        assertEquals(11, ret);
+
+        Invoker.invokeMethod("com.pconnect.factory.util.Invoker", "test");
+    }
+
     public void testLogger(){
         final Logger log = new Logger(getClass());
-        log.logError("remplace valeur @ @ @ @", 1,2,3,4);
+        log.logError("remplacer valeur @ @ @ @", 1,2,3,4);
 
 
     }
@@ -75,43 +120,6 @@ extends TestCase
         assertEquals("name_of_class.data",ParsingFactory.convertClassToDataFileName(class3));
     }
 
-    public void testRapidity(){
-        final IPerson p1 = new Person("Bros", "Mario", 100);
-        for (int i = 0 ; i < 1000 ; i ++) {
-
-            final int rapidity = p1.getRapidity();
-            System.out.println(rapidity);
-
-            assertEquals(true, rapidity>=1);
-            assertEquals(true, rapidity<=10);
-        }
-    }
-
-    public void testRandomList(){
-        for(int i =0;i<1000;i++){
-            final int random = FactoryUtils.random(0,1,2,3,4,5,6,7,8,9,10);
-            assertEquals(true, random>=0);
-            assertEquals(true, random<=10);
-        }
-    }
-
-    public void testRandom(){
-        for(int i =0;i<1000;i++){
-            final int random = FactoryUtils.random(50,70);
-            assertEquals(true, random>=50);
-            assertEquals(true, random<=70);
-        }
-    }
-
-    public void testDice(){
-        final int[] tab={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        for(int i = 0 ; i < 300000;i++){
-            final int de1 = FactoryUtils.dice(6, 2);
-            tab[de1]++;
-        }
-        afficheResult(tab);
-    }
-
     public void testProbability(){
         final int[] tab={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         for(int i = 0 ; i < 1000000; i ++){
@@ -129,41 +137,33 @@ extends TestCase
         afficheResult(tab);
     }
 
-    /**
-     * @param tab
-     */
-    private void init(final int[] tab) {
-        for(int i=0 ; i < tab.length;i++){
-            tab[i] = 0;
+
+    public void testRandom(){
+        for(int i =0;i<1000;i++){
+            final int random = FactoryUtils.random(50,70);
+            assertEquals(true, random>=50);
+            assertEquals(true, random<=70);
+        }
+    }
+    public void testRandomList(){
+        for(int i =0;i<1000;i++){
+            final int random = FactoryUtils.random(0,1,2,3,4,5,6,7,8,9,10);
+            assertEquals(true, random>=0);
+            assertEquals(true, random<=10);
         }
     }
 
-    /**
-     * @param tab
-     */
-    private void afficheResult(final int[] tab) {
-        System.out.println("-----------------");
-        for(int i=0 ; i < tab.length;i++){
-            if(tab[i]!=0) {
-                System.out.println( i + " : " + tab[i]);
-            }
+
+    public void testRapidity(){
+        final IPerson p1 = new Person("Bros", "Mario", 100);
+        for (int i = 0 ; i < 1000 ; i ++) {
+
+            final int rapidity = p1.getRapidity();
+            System.out.println(rapidity);
+
+            assertEquals(true, rapidity>=1);
+            assertEquals(true, rapidity<=10);
         }
-        System.out.println("-----------------");
-    }
-
-
-    private final String methodName = "length";
-    private final String valueObject = "Some object";
-
-
-    public void testGetMethod() throws SecurityException, NoSuchMethodException, IllegalArgumentException,
-    IllegalAccessException, InvocationTargetException, ClassNotFoundException, InstantiationException {
-        final Class<?> c = Class.forName("java.lang.String");
-        final Method m = c.getMethod(methodName, new Class[] {});
-        final Object ret = m.invoke(valueObject, new Object[] {});
-        assertEquals(11, ret);
-
-        Invoker.invokeMethod("com.pconnect.factory.util.Invoker", "test");
     }
 
 
