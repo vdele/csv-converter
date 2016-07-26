@@ -36,7 +36,7 @@ public class CsvToJson extends CSVParser implements ICSVConverter
     }
 
     public static CsvToJson getInstance(){
-    	System.out.println("Starting JSON conversion ... ");
+        System.out.println("Starting JSON conversion ... ");
         return CsvToJson.instance;
     }
 
@@ -44,32 +44,30 @@ public class CsvToJson extends CSVParser implements ICSVConverter
     /* (non-Javadoc)
      * @see com.vdel.tools.convertcsv.ICSVConverter#convert()
      */
-    public void convert(String inFileName,String outFileName) throws IOException {
-    	
-    	// Construct report object with csv file
-    	parsingCsvFile(inFileName, outFileName);
-    	
-    	// Start conversion into JSON
-        ObjectMapper mapper = new ObjectMapper();
+    public void convert(final String inFileName,final String outFileName) throws IOException {
+
+        // Construct report object with csv file
+        parsingCsvFile(inFileName, outFileName);
+
+        // Start conversion into JSON
+        final ObjectMapper mapper = new ObjectMapper();
         try {
-        	// Write content of  report object into json file
-        	// DefaultPrettyPrinter = indent and format json file
-        	mapper.writerWithDefaultPrettyPrinter().writeValue(outFile, report);
-			
-        	
-        	// Write content of report object into console
-			String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(report);
-			System.out.println(jsonInString);
-			
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // Write content of  report object into json file
+            // DefaultPrettyPrinter = indent and format json file
+            mapper.writerWithDefaultPrettyPrinter().writeValue(outFile, report);
+
+
+            // Write content of report object into console
+            final String jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(report);
+            System.out.println(jsonInString);
+
+        } catch (final JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (final JsonMappingException e) {
+            e.printStackTrace();
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

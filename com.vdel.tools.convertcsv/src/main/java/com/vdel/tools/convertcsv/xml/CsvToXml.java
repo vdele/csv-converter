@@ -24,7 +24,7 @@ import com.vdel.tools.convertcsv.bo.Report;
 public class CsvToXml extends CSVParser implements ICSVConverter
 {
 
-    /**
+    /** 
      * Using singleton pattern : Just one instance of this object
      */
     private static CsvToXml instance = new CsvToXml();
@@ -41,24 +41,24 @@ public class CsvToXml extends CSVParser implements ICSVConverter
      * @return
      */
     public static CsvToXml getInstance(){
-    	System.out.println("Xml File generation ... ");
+        System.out.println("Xml File generation ... ");
         return CsvToXml.instance;
     }
 
     /* (non-Javadoc)
      * @see com.vdel.tools.convertcsv.ICSVConverter#convert()
      */
-	public void convert(String inFileName, String outFileName) throws IOException, JAXBException {
-		parsingCsvFile(inFileName, outFileName);
-		
-		JAXBContext jaxbContext = JAXBContext.newInstance(Report.class);
-		Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-		
-		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		
-		jaxbMarshaller.marshal(report, outFile);
-		jaxbMarshaller.marshal(report, System.out);
-	}
+    public void convert(final String inFileName, final String outFileName) throws IOException, JAXBException {
+        parsingCsvFile(inFileName, outFileName);
+
+        final JAXBContext jaxbContext = JAXBContext.newInstance(Report.class);
+        final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+        jaxbMarshaller.marshal(report, outFile);
+        jaxbMarshaller.marshal(report, System.out);
+    }
 
 }
 
