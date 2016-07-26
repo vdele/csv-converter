@@ -1,85 +1,42 @@
+
 package com.vdel.bo.orga;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
-public class App
-{
+public class App {
 
-    public static class Auto implements Serializable {
-        String nom;
-        String marque;
+    static Scanner scanner = new Scanner(System.in);
 
-    }
-
-    public static void main( final String[] args )
+    static void friseChronologique(final int d, final int n, final int[] frise)
     {
-
-        String a = null;
-        a = readTransactionID();
-
-        saveTransactionId(a);
-
-    }
-
-    private static String readTransactionID() {
-        String transactionId = null;
-        ObjectInputStream input = null;
-        final File file = new File("toto.sav");
-        if (file.exists()) {
-            try {
-                System.out.println("Fichier existe toto");
-                input = new ObjectInputStream(new FileInputStream(file));
-                transactionId = (String) input.readObject();
-                System.out.println("Content : \n" + transactionId + "\n-----------");
-            } catch (final FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (final IOException e) {
-                e.printStackTrace();
-            } catch (final ClassNotFoundException e) {
-                e.printStackTrace();
+        int i = 0;
+        if(frise!=null && frise.length>0) {
+            while (d > frise[i] && (i < n || i < frise.length)) {
+                i++;
             }
-        } else {
-            System.out.println("fichier non trouvé");
         }
-
-        return transactionId;
+        System.out.println(i+1);
     }
 
-    private static void saveTransactionId(final Object transactionId) {
-        String whatIWantToAdd = (String) transactionId;
-        if (whatIWantToAdd != null) {
-            whatIWantToAdd = whatIWantToAdd + "\n123456789";
-
-        } else {
-            whatIWantToAdd = "first";
-        }
-        ObjectOutputStream output = null;
-        try {
-            output = new ObjectOutputStream(new FileOutputStream("toto.sav"));
-            output.writeObject(whatIWantToAdd);
-            output.close();
-        } catch (final FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-
+    public static void main(final String args[])
+    {
+        final int d = Integer.parseInt(scanner.nextLine());
+        final int n = Integer.parseInt(scanner.nextLine());
+        final int[] frise = read_int_line();
+        friseChronologique(d, n, frise);
     }
 
-    double a;
-
-    void setA(final double b) {
-        a = b;
+    static int[] read_int_line()
+    {
+        final String[] s = scanner.nextLine().split(" ");
+        final int[] out = new int[s.length];
+        for (int i = 0; i < s.length; i++)
+        {
+            if (s[i].length() > 0)
+            {
+                out[i] = Integer.parseInt(s[i]);
+            }
+        }
+        return out;
     }
 }

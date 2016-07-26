@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<report>
+    <errors>
+        <error line="5" message="Incorrect value for color">1462100403;A;100.1;9</error>
+    </errors>
+    <inputFile>fileCsv.csv</inputFile>
+    <references>
+        <reference color="82" price="45.12" referenceNumber="1460100040" size="27"/>
+        <reference color="71" price="12.0" referenceNumber="1460900848" size="145"/>
+        <reference color="71" price="5.56" referenceNumber="1462100044" size="19"/>
+        <reference color="66" price="105.23" referenceNumber="1462100403" size="97"/>
+    </references>
+</report>
